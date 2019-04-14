@@ -1,6 +1,7 @@
 
 #include <iostream>
 #include <vector>
+#include "histogram.h"
 
 using namespace std;
 
@@ -13,24 +14,6 @@ vector <double> input_numbers(size_t count)
         cin >> result[i];
     }
     return result;
-}
-
-void find_minmax(const vector<double>& numbers, double& min, double& max)
-{
-    min = numbers[0];
-    max = numbers[0];
-    for (double number : numbers)
-    {
-        if (number<min)
-        {
-            min = number;
-        }
-        if (number>max)
-        {
-            max = number;
-        }
-    }
-
 }
 
 vector <size_t> make_histogram(vector<double>numbers,size_t bin_count)
@@ -114,7 +97,7 @@ void svg_text(double left, double baseline, string text)
 
 
 
-void svg_rect(double x, double y, double width, double height,string stroke="black",string fill="black")
+void svg_rect(double x=0, double y=0, double width=100, double height=200,string stroke="black",string fill="black")
 {
     cout<<" <rect x='"<<x<<"' y='"<<y<<"' width='"<<width<<"' height='"<<height<<"' stroke='"<<stroke<<"' fill='"<<fill<<"' />";
 }
@@ -134,8 +117,7 @@ void show_histogram_svg(const vector<size_t>& bins)
     for (size_t bin : bins)
     {
         const double bin_width = 10 * bin;
-        svg_text(TEXT_LEFT, top + TEXT_BASELINE, to_string(bin));
-        svg_rect(TEXT_WIDTH, top, bin_width, BIN_HEIGHT,stroke,fill);
+        svg_rect(top, TEXT_WIDTH, BIN_HEIGHT, bin_width,stroke,fill);
         top += BIN_HEIGHT;
     }
     svg_end();
